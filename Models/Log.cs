@@ -7,5 +7,6 @@ public class Log
     public int AttackModifier { get; set; }
     public int DiceRoll { get; set; }
     public int Damage { get; set; }
+    public int DamageModifier { get; set; }
     public int EnemyHp { get; set; }
 }

@@ -42,7 +42,8 @@ public class SimpleFighter : IFighter
             CharacterName = currentMoving.Name,
             EnemyName = waiting.Name,
             AttackModifier = currentMoving.AttackModifier,
-            DiceRoll = chance
+            DiceRoll = chance,
+            DamageModifier = currentMoving.DamageModifier
         };
         switch (chance)
         {

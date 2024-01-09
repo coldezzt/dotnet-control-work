@@ -32,18 +32,18 @@
     @for (var index = 0; index < Model.Outcome.Logs.Count; index++)
     {
         var action = Model.Outcome.Logs[index];
-        <h2>Ход: @index</h2>
-        <div>Throwed dice: @action.DiceRoll</div>
+        <h2>Move: @index</h2>
+        <div>Throwed dice: @action.DiceRoll (+@action.AttackModifier)</div>
         @if (action.Damage == 0)
         {
             <div>Miss!</div>
         }
-        <div>Damage: @action.Damage (+@action.AttackModifier) for @action.EnemyName</div>
+        <div>Damage: @action.Damage (+@action.DamageModifier) for @action.EnemyName</div>
         <div>Enemy HP: @action.EnemyName (@action.EnemyHp)</div>
     }
-
+    <div></div>
     <div>
-        Победил:
+        Winner:
         @if (Model.Outcome.WinnerLetter is 'P')
         {
             <div> @Model.Player.Name</div> 
