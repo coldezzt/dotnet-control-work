@@ -33,6 +33,7 @@
     {
         var action = Model.Outcome.Logs[index];
         <h2>Move: @index</h2>
+        <div>Moving: @action.CharacterName</div>
         <div>Throwed dice: @action.DiceRoll (+@action.AttackModifier)</div>
         @if (action.Damage == 0)
         {
