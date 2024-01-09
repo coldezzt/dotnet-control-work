@@ -1,0 +1,57 @@
+@page
+@using System.ComponentModel
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Models.Creatures
+@model UI.Pages.Game
+
+<div class="card">
+    <div class="card-header">Edit your character</div>
+    <form class="card-body" method="POST">
+        @foreach (var property in typeof(Player).GetProperties())
+        {
+            @Html.Label(property.GetCustomAttributes(true)
+                .Select(a => (a as DisplayNameAttribute)?.DisplayName)
+                .FirstOrDefault(name => name is not null) ?? property.Name)
+            @Html.Editor(property.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessage(property.Name, new { @class = "text text-danger" })
+            <br/>
+        }
+        <input type="submit" class="btn btn-primary" value="Battle!"/>
+    </form>
+</div>
+
+@if (Model.Monster is not null)
+{
+    <div>Monster Name: @Model.Monster.Name</div>
+    <div>Monster HP: @Model.Monster.HitPoints</div>
+    <div>Monster AC: @Model.Monster.ArmorClass</div>
+}
+
+@if (Model.Outcome is not null)
+{
+    @for (var index = 0; index < Model.Outcome.Logs.Count; index++)
+    {
+        var action = Model.Outcome.Logs[index];
+        <h2>Move: @index</h2>
+        <div>Moving: @action.CharacterName</div>
+        <div>Throwed dice: @action.DiceRoll (+@action.AttackModifier)</div>
+        @if (action.Damage == 0)
+        {
+            <div>Miss!</div>
+        }
+        <div>Damage: @action.Damage (+@action.DamageModifier) for @action.EnemyName</div>
+        <div>Enemy HP: @action.EnemyName (@action.EnemyHp)</div>
+    }
+    <div></div>
+    <div>
+        Winner:
+        @if (Model.Outcome.WinnerLetter is 'P')
+        {
+            <div> @Model.Player.Name</div> 
+        }
+        else
+        {
+            <div> @Model.Monster?.Name</div> 
+        }
+    </div>
+}
