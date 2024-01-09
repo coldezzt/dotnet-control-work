@@ -27,20 +27,21 @@
     <div>Monster AC: @Model.Monster.ArmorClass</div>
 }
 
-<!--Вывод логов на экран-->
 @if (Model.Outcome is not null)
 {
-    @foreach (var action in Model.Outcome.Logs)
+    @for (var index = 0; index < Model.Outcome.Logs.Count; index++)
     {
-        <h2>@action.ToString()</h2>
-        @for (int i = 0; i < action.DiceRoll.Length; i++)
+        var action = Model.Outcome.Logs[index];
+        <h2>Ход: @index</h2>
+        <div>Throwed dice: @action.DiceRoll</div>
+        @if (action.Damage == 0)
         {
-            <div> d20 + attack modifier: @action.DiceRoll[i] + @action.AttackModifier</div> 
-            <div>Damage: @action.Damage for @action.EnemyName</div>
-            <div>Enemy HP: @action.EnemyName (@action.EnemyHp)</div>  
-        }    
+            <div>Miss!</div>
+        }
+        <div>Damage: @action.Damage (+@action.AttackModifier) for @action.EnemyName</div>
+        <div>Enemy HP: @action.EnemyName (@action.EnemyHp)</div>
     }
-        
+
     <div>
         Победил:
         @if (Model.Outcome.WinnerLetter is 'P')

@@ -1,6 +1,6 @@
 namespace Models.Creatures;
 
-public class ICreature
+public interface ICreature
 {
     public string Name { get; set; }
     

@@ -9,6 +9,4 @@ public class OutcomeDto
     public Player Player { get; set; }
     public Monster Monster { get; set; }
     public char WinnerLetter { get; set; }
-    
-    public OutcomeDto() {}
 }

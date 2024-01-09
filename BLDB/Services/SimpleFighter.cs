@@ -41,7 +41,8 @@ public class SimpleFighter : IFighter
         {
             CharacterName = currentMoving.Name,
             EnemyName = waiting.Name,
-            AttackModifier = currentMoving.AttackModifier
+            AttackModifier = currentMoving.AttackModifier,
+            DiceRoll = chance
         };
         switch (chance)
         {
@@ -51,12 +52,19 @@ public class SimpleFighter : IFighter
                 FightLog.Add(log);
                 break;
             default:
+                if (chance < waiting.ArmorClass)
+                {
+                    log.Damage = 0;
+                    log.EnemyHp = waiting.HitPoints;
+                    FightLog.Add(log);
+                    break;
+                }
                 var damage = 0;
                 for (var i = 0; i < currentMoving.AttackPerRound; i++)
                     damage += _rnd.Next(1, values[1]) + currentMoving.DamageModifier;
                 waiting.HitPoints -= damage * (chance == 20 ? 2 : 1);
                 log.Damage = damage;
-                log.EnemyHp = waiting.HitPoints - damage;
+                log.EnemyHp = waiting.HitPoints;
                 FightLog.Add(log);
                 break;
         }
